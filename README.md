@@ -1,4 +1,5 @@
 # MongoIntro
+* Part One 
 First query of adding 10 blogs
 
     db.blogs.insertMany(blogsArray)
@@ -32,6 +33,7 @@ First query of adding 10 blogs
         createdAt: {$gt: new Date("2022-04-01")}
     })
 
+* Part Two 
 - Find all blogs where the field lastModified does not exist and 
 
     db.blogs.find({
