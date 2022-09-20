@@ -1,1 +1,63 @@
 # MongoIntro
+First query of adding 10 blogs
+
+    db.blogs.insertMany(blogsArray)
+    - Insert a new blog into the collection
+    db.blogs.insert([{
+        createdAt: new Date(),
+        title: "Balls",
+        text: "Voluptates dicta ut dolorem dolor. Tempora animi facilis dignissimos nostrum tempora soluta asperiores. Aut velit aspernatur rerum doloribus. Voluptate non voluptate consequatur. Et qui recusandae aliquid autem consequatur necessitatibus dolore aut.\nSimilique tempora iure magni. Ut eos eveniet amet officiis ab dicta explicabo est eos. Aperiam sunt ullam ipsam iste. Quam dolorum omnis minus sapiente. Est perferendis aut at non aut est ducimus asperiores porro. Rerum et vero perspiciatis ea facere omnis dolor dolores qui.\nNon voluptates aliquam et praesentium vero adipisci odio. Atque et molestias. Accusamus optio suscipit consequatur necessitatibus possimus ut nostrum et pariatur. Aut nam repellendus ut voluptate molestias et sint. Excepturi et ullam dolor ipsa nulla sapiente et. Suscipit quo consequatur voluptatem qui neque voluptatem voluptate ex.",
+        author: "Ben Dover",
+        lastModified: new Date(),
+        categories: ["nulla", "quasi", "beatae"],
+        id: "69",
+        objectId: 11
+    }])
+
+- Find one blog by author
+
+    db.blogs.find({
+        author: "Ben Dover"
+    }) 
+
+- Find all blogs whose objectId is greater than 5
+
+    db.blogs.find({
+        objectId: {$gt: 5}
+    })
+
+- Find all blogs whose createdAt is after April 1, 2022
+
+    db.blogs.find({
+        createdAt: {$gt: new Date("2022-04-01")}
+    })
+
+- Find all blogs where the field lastModified does not exist and 
+
+    db.blogs.find({
+        lastModified: {exists: false}
+    })
+
+- Find all blogs where the createdAt type is a date
+
+    db.blogs.find({
+        "createdAt": {$type: "date"}
+    })
+
+- Combine the above two queries into one to find all blogs in which lastModified does not exist and createdAt is the type date
+
+    db.blogs.find({
+    lastModified: {$exists: false},"createdAt":{$type: "date"}
+    })
+
+- Find a blog with a specific phrase (or a more complex regular expression if you want to practice regexs) in the text
+
+    db.blogs.find({
+    text: {$regex: /Voluptates dicta ut dolorem dolor/}
+    })
+
+- Find all blogs that have "qui" in the categories array
+
+    db.blogs.find({
+    categories: {$in:["qui"]}
+    })
