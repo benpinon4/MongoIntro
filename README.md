@@ -1,5 +1,5 @@
 # MongoIntro
-* Part One 
+# Part One 
 First query of adding 10 blogs
 
     db.blogs.insertMany(blogsArray)
@@ -33,11 +33,11 @@ First query of adding 10 blogs
         createdAt: {$gt: new Date("2022-04-01")}
     })
 
-* Part Two 
+# Part Two 
 - Find all blogs where the field lastModified does not exist and 
 
     db.blogs.find({
-        lastModified: {exists: false}
+        lastModified: {$exists: false}
     })
 
 - Find all blogs where the createdAt type is a date
@@ -63,3 +63,39 @@ First query of adding 10 blogs
     db.blogs.find({
     categories: {$in:["qui"]}
     })
+# Part 3
+- Find all blogs in which the lastModified does not exist and set it
+
+    db.blogs.updateMany(
+    {lastModified: {$exists:false}},
+    {$set:{lastModifed: new Date()}
+    })
+
+- From now on, all the following queries should update lastModified to be the current datetime 
+    
+    db.blogs.updateMany({
+        createdAt: {$gt: new Date("05-01-2022")}
+    },{$set: {lastModifed: new Date()}
+    })
+
+- Find all blogs created after May 2022 and add "lorem" as a new category in the categories array
+
+    db.blogs.updateMany({
+        createdAt: {$gt: new Date("05-01-2022")}
+    },{$addToSet: {categories: "lorem"}, 
+        $set: {lastModifed: new Date()}
+    })
+
+- Find all blogs that have the category "voluptas" and pull "voluptas" from the categories
+    
+    db.blogs.updateMany({
+        categories:  {$in: ["voluptas"]}
+    },{$addToSet:  {categories: "voluptas"}, 
+        $set: {lastModifed: new Date()}
+    })
+
+- Find all blogs with "corrupti" in the categories and delete those blogs
+    
+    db.blogs.deleteMany({
+    categories:  {$in: ["corrupti"]}
+    }
