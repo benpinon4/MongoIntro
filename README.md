@@ -2,8 +2,8 @@
 # Part One 
 First query of adding 10 blogs
 
-    db.blogs.insertMany(blogsArray)
-    - Insert a new blog into the collection
+- db.blogs.insertMany(blogsArray)
+- Insert a new blog into the collection
     db.blogs.insert([{
         createdAt: new Date(),
         title: "Balls",
